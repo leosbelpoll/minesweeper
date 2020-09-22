@@ -58,7 +58,7 @@ public class GameService {
     public Game resume(Long gameId) throws NotFoundException, OperationNotSupportedException {
         Game game = this.get(gameId);
         if (game.isPlaying()) {
-            throw new OperationNotSupportedException("Game is already resumed");
+            this.save(gameId);
         }
         game.setLastResume(new Date());
         gameRepository.save(game);
