@@ -71,7 +71,7 @@ public class Game {
     }
 
     public void lose() {
-        this.setWon(false);
+        this.setLost(true);
         this.setLastResume(null);
     }
 
