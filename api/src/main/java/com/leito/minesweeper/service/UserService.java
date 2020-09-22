@@ -1,5 +1,6 @@
 package com.leito.minesweeper.service;
 
+import com.leito.minesweeper.dto.UserSummaryResponse;
 import com.leito.minesweeper.model.User;
 import com.leito.minesweeper.repository.UserRepository;
 import javassist.NotFoundException;
@@ -12,6 +13,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    GameService gameService;
 
     public User login(String username) {
         Optional<User> optionalUser = userRepository.getUserByUsername(username);
@@ -32,5 +36,13 @@ public class UserService {
         }
 
         return optionalUser.get();
+    }
+
+    public UserSummaryResponse getSummary(Long id) {
+        UserSummaryResponse summaryResponse = new UserSummaryResponse();
+        summaryResponse.setUnfinishedGames(gameService.getUnfinishedGamesByUserId(id));
+        summaryResponse.setFinishedGames(gameService.getFinishedGamesByUserId(id));
+
+        return summaryResponse;
     }
 }

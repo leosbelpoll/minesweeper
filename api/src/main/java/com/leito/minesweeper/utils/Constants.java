@@ -9,6 +9,7 @@ public class Constants {
     public final static String ROW = "row";
     public final static String COLUMN = "column";
     public final static String OPEN = "open";
+
     private Constants() {
     }
 }

@@ -1,5 +1,6 @@
 package com.leito.minesweeper.service;
 
+import com.leito.minesweeper.dto.GameDto;
 import com.leito.minesweeper.dto.PlayRequest;
 import com.leito.minesweeper.game.Board;
 import com.leito.minesweeper.game.Cell;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -87,5 +89,15 @@ public class GameService {
         }
         gameRepository.save(game);
         return play;
+    }
+
+    public List<GameDto> getUnfinishedGamesByUserId(Long userId) {
+        List<GameDto> userUnfinishedGameDtos = gameRepository.getUnfinishedGamesByUserId(userId);
+        return userUnfinishedGameDtos;
+    }
+
+    public List<GameDto> getFinishedGamesByUserId(Long userId) {
+        List<GameDto> userUnfinishedGames = gameRepository.getFinishedGamesByUserId(userId);
+        return userUnfinishedGames;
     }
 }

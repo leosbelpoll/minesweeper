@@ -2,6 +2,7 @@ package com.leito.minesweeper.controller;
 
 import com.leito.minesweeper.dto.UserLoginRequest;
 import com.leito.minesweeper.dto.UserLoginResponse;
+import com.leito.minesweeper.dto.UserSummaryResponse;
 import com.leito.minesweeper.model.User;
 import com.leito.minesweeper.service.UserService;
 import io.swagger.annotations.*;
@@ -24,6 +25,7 @@ public class UserController {
     @ApiOperation(value = "Create/Login user", notes = "It creates a new User if it doesn't exist (Just for game interactivity)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad request")
     })
     public ResponseEntity<UserLoginResponse> login(@Valid @ApiParam(required = true, value = "User data") @RequestBody UserLoginRequest userRequest) {
         User user = userService.login(userRequest.getUsername());
@@ -35,8 +37,11 @@ public class UserController {
     @ApiOperation(value = "Get User summary")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User not found"),
     })
-    public ResponseEntity<String> userSummary(@NotNull @ApiParam("User id") @PathVariable("id") Long id) {
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+    public ResponseEntity<UserSummaryResponse> userSummary(@NotNull @ApiParam("User id") @PathVariable("id") Long id) {
+        UserSummaryResponse summaryResponse = userService.getSummary(id);
+        return new ResponseEntity<>(summaryResponse, HttpStatus.OK);
     }
 }
