@@ -6,6 +6,7 @@ import com.leito.minesweeper.game.Cell;
 import com.leito.minesweeper.game.Play;
 import com.leito.minesweeper.game.Status;
 import com.leito.minesweeper.model.Game;
+import com.leito.minesweeper.model.User;
 import com.leito.minesweeper.repository.GameRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class GameService {
     @Autowired
     GameRepository gameRepository;
 
+    @Autowired
+    UserService userService;
+
     public Game get(Long id) throws NotFoundException {
         Optional<Game> optionalGame = gameRepository.findById(id);
         if (!optionalGame.isPresent()) {
@@ -29,8 +33,9 @@ public class GameService {
         return optionalGame.get();
     }
 
-    public Game start(Integer rows, Integer columns, Integer mines) {
-        Game game = new Game(rows, columns, mines);
+    public Game start(Integer rows, Integer columns, Integer mines, Long userId) throws NotFoundException {
+        User user = userService.get(userId);
+        Game game = new Game(rows, columns, mines, user);
         gameRepository.save(game);
 
         return game;

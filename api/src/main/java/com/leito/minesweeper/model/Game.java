@@ -46,10 +46,13 @@ public class Game {
     @Convert(converter = BoardJsonConverter.class)
     private Board board;
 
+    @ManyToOne
+    private User user;
+
     @Column
     private Date createdAt;
 
-    public Game(Integer rows, Integer columns, Integer mines) {
+    public Game(Integer rows, Integer columns, Integer mines, User user) {
         this.mines = mines;
         this.rows = rows;
         this.columns = columns;
@@ -57,7 +60,8 @@ public class Game {
         this.lost = false;
         this.createdAt = new Date();
         this.lastResume = this.createdAt;
-        board = new Board(rows, columns, mines);
+        this.board = new Board(rows, columns, mines);
+        this.user = user;
     }
 
     public void setPlayedTime(Long playedTime) {

@@ -31,10 +31,13 @@ public class GameController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     public ResponseEntity<StartGameResponse> start(@Valid @RequestBody StartGameRequest startGameRequest) {
-        Game game = this.gameService.start(startGameRequest.getRows(), startGameRequest.getColumns(), startGameRequest.getMines());
-        StartGameResponse response = new StartGameResponse(game);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            Game game = this.gameService.start(startGameRequest.getRows(), startGameRequest.getColumns(), startGameRequest.getMines(), startGameRequest.getUserId());
+            StartGameResponse response = new StartGameResponse(game);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping(path = "/{id}/resume")

@@ -25,6 +25,9 @@ public class StartGameRequest {
     @NotNull
     private Integer mines;
 
+    @NotNull
+    private Long userId;
+
     @AssertTrue(message = "Mines have to be less")
     private boolean getMaxMines() {
         return rows * columns > mines;
