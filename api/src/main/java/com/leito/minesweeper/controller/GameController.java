@@ -1,7 +1,7 @@
 package com.leito.minesweeper.controller;
 
-import com.leito.minesweeper.dto.StartGameRequest;
-import com.leito.minesweeper.dto.StartGameResponse;
+import com.leito.minesweeper.dto.*;
+import com.leito.minesweeper.game.Play;
 import com.leito.minesweeper.model.Game;
 import com.leito.minesweeper.service.GameService;
 import io.swagger.annotations.ApiOperation;
@@ -38,8 +38,23 @@ public class GameController {
     }
 
     @PostMapping(path = "/{id}/resume")
-    public ResponseEntity<String> resume() {
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+    @ApiOperation(value = "Resume a game")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Game resumed successfully"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Game not found"),
+            @ApiResponse(code = 412, message = "Game is already resumed")
+    })
+    public ResponseEntity<ResumeGameResponse> resume(@NotNull @ApiParam("Game id") @PathVariable("id") Long id) {
+        try {
+            Game game = gameService.resume(id);
+            ResumeGameResponse resumeGameResponse = new ResumeGameResponse(game);
+            return new ResponseEntity<>(resumeGameResponse, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (OperationNotSupportedException e) {
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+        }
     }
 
     @PostMapping(path = "/{id}/save")
@@ -62,8 +77,24 @@ public class GameController {
     }
 
     @PostMapping(path = "/{id}/play")
-    public ResponseEntity<String> play() {
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+    @ApiOperation(value = "Play")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Play successfully"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Game not found"),
+            @ApiResponse(code = 412, message = "Game is paused")
+    })
+    public ResponseEntity<PlayResponse> play(@NotNull @ApiParam("Game id") @PathVariable("id") Long id,
+                                             @Valid @ApiParam(required = true, value = "Play options") @RequestBody PlayRequest playRequest) {
+        try {
+            Play play = gameService.play(id, playRequest);
+            PlayResponse playResponse = new PlayResponse();
+            playResponse.setCells(play.getCells(), play.getStatus());
+            return new ResponseEntity<>(playResponse, HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (OperationNotSupportedException e) {
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+        }
     }
-
 }

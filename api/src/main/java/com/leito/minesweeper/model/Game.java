@@ -1,5 +1,7 @@
 package com.leito.minesweeper.model;
 
+import com.leito.minesweeper.game.Board;
+import com.leito.minesweeper.utils.BoardJsonConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +42,10 @@ public class Game {
     @Column
     private Boolean lost;
 
+    @Column(name = "board", columnDefinition = "text")
+    @Convert(converter = BoardJsonConverter.class)
+    private Board board;
+
     @Column
     private Date createdAt;
 
@@ -51,12 +57,23 @@ public class Game {
         this.lost = false;
         this.createdAt = new Date();
         this.lastResume = this.createdAt;
+        board = new Board(rows, columns, mines);
     }
 
     public void setPlayedTime(Long playedTime) {
         if (isNull(this.playedTime))
             this.playedTime = 0L;
         this.playedTime = this.playedTime + playedTime;
+    }
+
+    public void lose() {
+        this.setWon(false);
+        this.setLastResume(null);
+    }
+
+    public void win() {
+        this.setWon(true);
+        this.setLastResume(null);
     }
 
     public boolean isSaved() {

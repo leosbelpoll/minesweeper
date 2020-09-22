@@ -1,5 +1,10 @@
 package com.leito.minesweeper.service;
 
+import com.leito.minesweeper.dto.PlayRequest;
+import com.leito.minesweeper.game.Board;
+import com.leito.minesweeper.game.Cell;
+import com.leito.minesweeper.game.Play;
+import com.leito.minesweeper.game.Status;
 import com.leito.minesweeper.model.Game;
 import com.leito.minesweeper.repository.GameRepository;
 import javassist.NotFoundException;
@@ -7,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.naming.OperationNotSupportedException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -40,5 +46,41 @@ public class GameService {
         game.setPlayedTime(diff);
         game.setLastResume(null);
         gameRepository.save(game);
+    }
+
+    public Game resume(Long gameId) throws NotFoundException, OperationNotSupportedException {
+        Game game = this.get(gameId);
+        if (game.isPlaying()) {
+            throw new OperationNotSupportedException("Game is already resumed");
+        }
+        game.setLastResume(new Date());
+        gameRepository.save(game);
+        return game;
+    }
+
+    public Play play(Long gameId, PlayRequest playRequest) throws NotFoundException, OperationNotSupportedException {
+        Play play = new Play();
+        Game game = this.get(gameId);
+        if (game.isSaved()) {
+            throw new OperationNotSupportedException("Game is paused");
+        }
+        Board board = game.getBoard();
+        ArrayList<Cell> cells = board.play(playRequest.getAction(), playRequest.getRow(), playRequest.getColumn());
+        play.setCells(cells);
+
+        Boolean lost = board.hasMine(cells);
+        if (lost) {
+            game.lose();
+            play.setStatus(Status.LOST);
+            play.setCells(board.gameLost());
+        } else if (board.wasWon()) {
+            game.win();
+            cells.addAll(board.getClosedCells());
+            play.setStatus(Status.WON);
+        } else {
+            play.setStatus(Status.PLAYING);
+        }
+        gameRepository.save(game);
+        return play;
     }
 }
