@@ -5,15 +5,18 @@ import com.leito.minesweeper.dto.StartGameResponse;
 import com.leito.minesweeper.model.Game;
 import com.leito.minesweeper.service.GameService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.naming.OperationNotSupportedException;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/v1/games")
@@ -23,6 +26,10 @@ public class GameController {
 
     @PostMapping(path = "start")
     @ApiOperation(value = "Start a new game")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Game started successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<StartGameResponse> start(@Valid @RequestBody StartGameRequest startGameRequest) {
         Game game = this.gameService.start(startGameRequest.getRows(), startGameRequest.getColumns(), startGameRequest.getMines());
         StartGameResponse response = new StartGameResponse(game);
@@ -36,8 +43,22 @@ public class GameController {
     }
 
     @PostMapping(path = "/{id}/save")
-    public ResponseEntity<String> save() {
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+    @ApiOperation(value = "Save a game")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Game saved successfully"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Game not found"),
+            @ApiResponse(code = 412, message = "Game is already saved")
+    })
+    public ResponseEntity<?> save(@NotNull @ApiParam("Game id") @PathVariable("id") Long id) {
+        try {
+            gameService.save(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (OperationNotSupportedException e) {
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+        }
     }
 
     @PostMapping(path = "/{id}/play")
