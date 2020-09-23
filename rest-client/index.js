@@ -107,6 +107,20 @@ function LeitoMineswipperClient(basePath) {
         };
         return this.request(url, null, options);
     };
+
+    /**
+     *
+     * @param {*} id Game id
+     * @param {*} playOptions example: {action: "FLAG" | "REVEAL", row: 2, column: 5}
+     */
+    this.play = function (id, playOptions) {
+        const url = this.GAMES_URL + "/" + id + "/play";
+        const options = {
+            method: "POST",
+            body: JSON.stringify(playOptions),
+        };
+        return this.request(url, null, options);
+    };
 }
 
 module.exports = LeitoMineswipperClient;
