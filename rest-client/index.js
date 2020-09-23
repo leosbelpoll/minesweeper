@@ -47,6 +47,20 @@ function LeitoMineswipperClient(basePath) {
             throw new Error(res);
         });
     };
+
+    /**
+     *
+     * @param {String} username
+     */
+    this.login = function (username) {
+        const options = {
+            method: "POST",
+            body: JSON.stringify({
+                username,
+            }),
+        };
+        return this.request(this.USERS_URL, null, options);
+    };
 }
 
 module.exports = LeitoMineswipperClient;
