@@ -61,6 +61,15 @@ function LeitoMineswipperClient(basePath) {
         };
         return this.request(this.USERS_URL, null, options);
     };
+
+    /**
+     *
+     * @param {Integer} id User id
+     */
+    this.getUserSummary = function (id) {
+        const url = this.USERS_URL + "/" + id;
+        return this.request(url);
+    };
 }
 
 module.exports = LeitoMineswipperClient;
