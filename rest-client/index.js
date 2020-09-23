@@ -70,6 +70,19 @@ function LeitoMineswipperClient(basePath) {
         const url = this.USERS_URL + "/" + id;
         return this.request(url);
     };
+
+    /**
+     *
+     * @param {Object} gameOptions example: {rows: 10, columns: 10, mines: 10, userId: 1}
+     */
+    this.startGame = function (gameOptions) {
+        const url = this.GAMES_URL + "/start";
+        const options = {
+            method: "POST",
+            body: JSON.stringify(gameOptions),
+        };
+        return this.request(url, null, options);
+    };
 }
 
 module.exports = LeitoMineswipperClient;
