@@ -4,7 +4,7 @@
     "description": "Leito Minesweeper REST Client",
     "main": "index.js",
     "scripts": {
-        "test": "echo 'Comming soon ;)'"
+        "test": "jest test"
     },
     "keywords": [],
     "author": "Leito",
