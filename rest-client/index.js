@@ -83,6 +83,18 @@ function LeitoMineswipperClient(basePath) {
         };
         return this.request(url, null, options);
     };
+
+    /**
+     *
+     * @param {Integer} id Game id
+     */
+    this.resumeGame = function (id) {
+        const url = this.GAMES_URL + "/" + id + "/resume";
+        const options = {
+            method: "POST",
+        };
+        return this.request(url, null, options);
+    };
 }
 
 module.exports = LeitoMineswipperClient;
