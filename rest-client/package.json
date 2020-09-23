@@ -1,0 +1,20 @@
+{
+    "name": "leito-mineswipper-rest-client",
+    "version": "1.0.0",
+    "description": "Leito Minesweeper REST Client",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo 'Comming soon ;)'"
+    },
+    "keywords": [],
+    "author": "Leito",
+    "license": "MIT",
+    "dependencies": {
+        "isomorphic-unfetch": "^3.0.0"
+    },
+    "devDependencies": {
+        "jest": "^26.4.2",
+        "nock": "^13.0.4",
+        "querystring": "^0.2.0"
+    }
+}
