@@ -10,6 +10,7 @@ import {
 import Login from "components/Login";
 import Home from "components/Home/Home";
 import Header from "components/Header";
+import Configuration from "components/Configuration/Configuration";
 
 const Routes = ({ logged }) => {
     if (!logged) {
@@ -33,6 +34,11 @@ const Routes = ({ logged }) => {
                             exact
                         />
                         <Route path="/" component={Home} exact />
+                        <Route
+                            path="/configuration"
+                            component={Configuration}
+                            exact
+                        />
                     </Switch>
                 </div>
             </Router>
