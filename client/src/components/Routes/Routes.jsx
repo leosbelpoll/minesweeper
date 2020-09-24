@@ -8,10 +8,11 @@ import {
 } from "react-router-dom";
 
 import Login from "components/Login";
-import Home from "components/Home/Home";
+import Home from "components/Home";
 import Header from "components/Header";
-import Configuration from "components/Configuration/Configuration";
-import Game from "components/Game/Game";
+import Configuration from "components/Configuration";
+import Game from "components/Game";
+import PageNotFound from "components/PageNotFound";
 
 const Routes = ({ logged }) => {
     if (!logged) {
@@ -41,6 +42,7 @@ const Routes = ({ logged }) => {
                             exact
                         />
                         <Route path="/game" component={Game} exact />
+                        <Route component={PageNotFound} />
                     </Switch>
                 </div>
             </Router>
