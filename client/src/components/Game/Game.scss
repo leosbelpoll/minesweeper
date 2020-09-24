@@ -1,0 +1,30 @@
+@import "variables";
+
+.game-row-cells {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-cells {
+    background: darken($thirdColor, 30);
+    border: outset 2px darken($thirdColor, 2);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.game-header {
+    padding: 20px;
+    background: darken($thirdColor, 30);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    * {
+        margin: 0 10px;
+    }
+}
+
+.game-header-info {
+    color: $lightColor;
+    font-size: 1.2em;
+}

@@ -11,6 +11,7 @@ import Login from "components/Login";
 import Home from "components/Home/Home";
 import Header from "components/Header";
 import Configuration from "components/Configuration/Configuration";
+import Game from "components/Game/Game";
 
 const Routes = ({ logged }) => {
     if (!logged) {
@@ -39,6 +40,7 @@ const Routes = ({ logged }) => {
                             component={Configuration}
                             exact
                         />
+                        <Route path="/game" component={Game} exact />
                     </Switch>
                 </div>
             </Router>
