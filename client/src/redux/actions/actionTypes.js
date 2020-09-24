@@ -27,3 +27,6 @@ export const LOGOUT_USER_ERROR = "LOGOUT_USER_ERROR";
 export const GET_SUMMARY_FETCH = "GET_SUMMARY_FETCH";
 export const GET_SUMMARY_SUCCESS = "GET_SUMMARY_SUCCESS";
 export const GET_SUMMARY_ERROR = "GET_SUMMARY_ERROR";
+
+// Config types
+export const SET_CONFIG = "SET_CONFIG";
