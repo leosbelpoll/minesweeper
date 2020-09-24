@@ -8,7 +8,7 @@ import {
     GET_SUMMARY_FETCH,
     GET_SUMMARY_SUCCESS,
     GET_SUMMARY_ERROR,
-} from "redux/actions/actionsTypes";
+} from "redux/actions/actionTypes";
 
 const initialState = {
     id: null,

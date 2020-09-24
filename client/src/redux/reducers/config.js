@@ -1,4 +1,4 @@
-import { SET_CONFIG } from "redux/actions/actionsTypes";
+import { SET_CONFIG } from "redux/actions/actionTypes";
 
 const initialState = {
     rows: 10,

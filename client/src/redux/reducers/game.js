@@ -11,7 +11,7 @@ import {
     PLAY_FETCH,
     PLAY_SUCCESS,
     PLAY_ERROR,
-} from "redux/actions/actionsTypes";
+} from "redux/actions/actionTypes";
 
 const initialState = {
     id: null,
