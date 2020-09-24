@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { login } from "redux/actions/user";
 import "./Login.scss";
 
-const Login = ({ login }) => {
+const Login = ({ login, user }) => {
     const [username, setUsername] = useState();
+    const { loading, error } = user;
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -31,8 +32,22 @@ const Login = ({ login }) => {
                     required
                 />
             </form>
+            {loading && <div className="text-center">Loading ....</div>}
+            {error && (
+                <div className="text-center">
+                    <span class="label label-danger">
+                        Oops, an error ocurred!
+                    </span>
+                </div>
+            )}
         </div>
     );
+};
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -41,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
