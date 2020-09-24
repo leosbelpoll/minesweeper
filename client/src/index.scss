@@ -1,0 +1,28 @@
+@import "variables";
+
+* {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+body {
+    background: $thirdColor;
+    color: $lightColor;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.big-title {
+    font-weight: bolder;
+    font-size: 3em;
+    margin-bottom: 1em;
+    text-align: center;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1.5em;
+        text-shadow: none !important;
+    }
+}
