@@ -1,0 +1,27 @@
+{
+    "user": {
+        "id": null,
+        "username": null,
+        "loading": false,
+        "error": null,
+        "summary": null
+    },
+    "game": {
+        "id": null,
+        "intialDate": null,
+        "playedTime": null,
+        "rows": null,
+        "columns": null,
+        "mines": null,
+        "board": [],
+        "loading": false,
+        "error": null,
+        "won": null,
+        "lost": null
+    },
+    "config": {
+        "rows": 10,
+        "columns": 10,
+        "mines": 10
+    }
+}
