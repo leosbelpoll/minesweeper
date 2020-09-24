@@ -7,10 +7,12 @@ import { getEnv } from "utils/env";
 
 import "./Header.scss";
 
-const Header = (props) => {
+const Header = ({ logoutUser, game, user, config }) => {
+    const loading = user.loading || config.loading || game.loading;
+
     const logout = (e) => {
         e.preventDefault();
-        props.logout();
+        logoutUser();
     };
 
     return (
@@ -26,6 +28,7 @@ const Header = (props) => {
                 <NavLink to="/configuration">
                     <i className="glyphicon glyphicon-cog"></i> Configuration
                 </NavLink>
+                {loading && <span className="text-warning">Loading ....</span>}
                 <a href="#logout" className="logout" onClick={logout}>
                     <i className="glyphicon glyphicon-off"></i> Logout
                 </a>
@@ -34,10 +37,18 @@ const Header = (props) => {
     );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        logout: () => dispatch(logout()),
+        user: state.user,
+        config: state.config,
+        game: state.game,
     };
 };
 
-export default connect(null, mapDispatchToProps)(Header);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logoutUser: () => dispatch(logout()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
