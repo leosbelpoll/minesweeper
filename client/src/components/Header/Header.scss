@@ -1,0 +1,47 @@
+@import "variables";
+
+.header-component {
+    nav {
+        background: $lightColor;
+        color: darken($primaryColor, 20%);
+        padding: 20px;
+        margin-bottom: 50px;
+        overflow: hidden;
+
+        span.title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 30px 0 20px;
+        }
+
+        a {
+            color: darken($primaryColor, 10%);
+            margin: 0 10px;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: $primaryColor;
+                text-decoration: none;
+            }
+        }
+
+        .logout {
+            float: right;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            color: $errorColor;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: darken($errorColor, 20);
+            }
+
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+}

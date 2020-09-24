@@ -9,6 +9,7 @@ import {
 
 import Login from "components/Login";
 import Home from "components/Home/Home";
+import Header from "components/Header";
 
 const Routes = ({ logged }) => {
     if (!logged) {
@@ -23,6 +24,7 @@ const Routes = ({ logged }) => {
     return (
         <div className="app-component">
             <Router>
+                <Header />
                 <div className="container">
                     <Switch>
                         <Route
