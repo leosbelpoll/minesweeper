@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import Login from "components/Login";
+import Home from "components/Home/Home";
 
 const Routes = ({ logged }) => {
     if (!logged) {
@@ -29,7 +30,7 @@ const Routes = ({ logged }) => {
                             render={() => <Redirect to="/" />}
                             exact
                         />
-                        <h1>Router working!</h1>
+                        <Route path="/" component={Home} exact />
                     </Switch>
                 </div>
             </Router>

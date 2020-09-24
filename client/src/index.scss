@@ -26,3 +26,56 @@ body {
         text-shadow: none !important;
     }
 }
+
+.big-title-primary {
+    color: $primaryColor;
+    text-shadow: darken($primaryColor, 30%) 2px 2px 0px;
+}
+
+.big-title-error {
+    color: $errorColor;
+    text-shadow: darken($errorColor, 30%) 2px 2px 0px;
+}
+
+.jumbotron {
+    background: white;
+    color: lighten($darkColor, 30%);
+    border: solid 2px darken($primaryColor, 10%);
+
+    table {
+        text-align: initial;
+    }
+}
+
+.btn {
+    border: none;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.btn-primary {
+    background: $primaryColor !important;
+
+    &:hover {
+        background: darken($primaryColor, 5%) !important;
+    }
+}
+
+.btn-success {
+    background: $secondaryColor !important;
+
+    &:hover {
+        background: darken($secondaryColor, 5%) !important;
+    }
+}
+
+.btn-disabled {
+    background: darken($lightColor, 20) !important;
+    pointer-events: none;
+}
+
+.form-control,
+.btn-full {
+    width: 100%;
+    display: inline-block;
+}
