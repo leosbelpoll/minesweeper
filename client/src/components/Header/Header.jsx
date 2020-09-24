@@ -9,6 +9,7 @@ import "./Header.scss";
 
 const Header = ({ logoutUser, game, user, config }) => {
     const loading = user.loading || config.loading || game.loading;
+    const error = user.error || config.error || game.error;
 
     const logout = (e) => {
         e.preventDefault();
@@ -29,6 +30,11 @@ const Header = ({ logoutUser, game, user, config }) => {
                     <i className="glyphicon glyphicon-cog"></i> Configuration
                 </NavLink>
                 {loading && <span className="text-warning">Loading ....</span>}
+                {error && (
+                    <span class="label label-danger">
+                        Oops, an error ocurred!
+                    </span>
+                )}
                 <a href="#logout" className="logout" onClick={logout}>
                     <i className="glyphicon glyphicon-off"></i> Logout
                 </a>
